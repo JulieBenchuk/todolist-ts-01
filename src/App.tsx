@@ -6,7 +6,6 @@ import {v1} from "uuid";
 export type filterValuesType = "all" | "active" | "completed";
 
 function App() {
-    console.log(v1());
 
     const toDoList: string = "What to learn";
     let [tasks, setTasks] = useState<Array<TaskType>>([ //state, setState
@@ -30,32 +29,25 @@ function App() {
         setTasks(copyTasks)
 
     }
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t))
+    }
 
     const [filter, setFilter] = useState<filterValuesType>("all")
     const onClickChangeFilter = (filter: filterValuesType) => {
         setFilter(filter)
     }
 
-    let tasksForRender;
-    switch (filter) {
-        case "completed":
-            tasksForRender = tasks.filter(t => t.isDone === true);
-            break;
-        case "active":
-            tasksForRender = tasks.filter(t => t.isDone === false);
-            break;
-        default:
-            tasksForRender = tasks;
-    }
-
     return (
         <div className="App">
             <ToDoList
                 title={toDoList}
-                tasks={tasksForRender}
+                tasks={tasks}
                 addTask={AddTask}
                 removeTask={onClickRemoveTask}
                 changeFilter={onClickChangeFilter}
+                filter={filter}
+                changeTaskStatus={changeTaskStatus}
 
             />
         </div>
