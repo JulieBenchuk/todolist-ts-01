@@ -15,7 +15,7 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-export const ToDoList = (props: ToDoListPropsType) => {
+const ToDoList = (props: ToDoListPropsType) => {
     const [error, setError] = useState<boolean>(false)
     const [input, setInput] = useState<string>(" ")
     const onClickAddTaskHandler = () => {
